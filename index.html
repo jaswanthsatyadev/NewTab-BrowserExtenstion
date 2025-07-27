@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Tab</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body class="bg-gray-900 text-white">
+    <div class="scroll-container">
+      <section
+        id="lockscreen"
+        class="h-screen flex flex-col items-center justify-center snap-start"
+      >
+        <div class="search-container">
+          <form
+            action="https://www.google.com/search"
+            method="get"
+            target="_blank"
+          >
+            <div class="search-box">
+              <img
+                src="icons/google.svg"
+                alt="Google Icon"
+                class="google-icon"
+              />
+              <input type="text" name="q" placeholder="Search Google" />
+            </div>
+          </form>
+        </div>
+        <h1 class="text-6xl font-bold">10:30</h1>
+        <p class="text-2xl mt-4">Hello, Boss</p>
+      </section>
+
+      <section
+        id="dashboard"
+        class="min-h-screen flex flex-col items-center justify-center snap-start"
+      >
+        <div class="hex-grid">
+          <!-- Hexagonal grid will be generated here by script.js -->
+        </div>
+      </section>
+
+      <section
+        id="devtools"
+        class="h-screen flex flex-col items-center justify-center snap-start"
+      >
+        <h2 class="text-4xl">Dev Tools</h2>
+        <!-- Dev tools content will go here -->
+      </section>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
