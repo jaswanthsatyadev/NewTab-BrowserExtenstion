@@ -12,17 +12,49 @@
   </head>
 
   <body class="bg-gray-900 text-white">
-    <div class="page-container">
+    <div class="viewport-container">
       <!-- Page Navigation Dots -->
       <div class="page-dots">
-        <div class="dot active" data-page="1"></div>
+        <div class="dot active" data-page="0"></div>
+        <div class="dot" data-page="1"></div>
         <div class="dot" data-page="2"></div>
-        <div class="dot" data-page="3"></div>
       </div>
 
-      <!-- Page 1: Time, Date, Search -->
-      <div class="page active" id="page1">
-        <div class="main-container">
+      <!-- Page 1: Lock Screen -->
+      <div class="lock-screen active" id="page1">
+        <div class="lock-screen-bg" id="lockScreenBg"></div>
+        <div class="lock-screen-content">
+          <div class="lock-screen-center">
+            <div class="time-display">
+              <h1 id="current-time" class="time">00:00</h1>
+              <p id="current-date" class="date">Monday, January 1</p>
+            </div>
+
+            <div class="lock-screen-info">
+              <div class="weather-widget">
+                <div class="weather-icon">☀️</div>
+                <div class="weather-text">
+                  <span class="weather-temp">72°F</span>
+                  <span class="weather-desc">Sunny</span>
+                </div>
+              </div>
+
+              <div class="notifications">
+                <div class="notification">
+                  <span class="notification-icon">📧</span>
+                  <span class="notification-text">3 new emails</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="unlock-hint">
+              <div class="unlock-text">Scroll up to unlock</div>
+              <div class="unlock-animation">
+                <div class="unlock-bar"></div>
+              </div>
+            </div>
+          </div>
+
           <div class="search-container">
             <form
               action="https://www.google.com/search"
@@ -30,21 +62,39 @@
               target="_blank"
             >
               <div class="search-box">
-                <img
-                  src="icons/google.svg"
-                  alt="Google Icon"
-                  class="google-icon"
-                />
+                <img src="icons/google.svg" alt="Google" class="google-icon" />
                 <input type="text" name="q" placeholder="Search Google" />
               </div>
             </form>
           </div>
+        </div>
+      </div>
 
-          <div class="time-container">
-            <h1 id="current-time" class="time">00:00</h1>
-            <p id="current-date" class="date">Monday, January 1</p>
+      <!-- Page 2: Dashboard -->
+      <div class="dashboard" id="page2">
+        <div class="dashboard-header">
+          <h2 class="dashboard-title">Dashboard</h2>
+          <div class="dashboard-date" id="dashboard-date"></div>
+        </div>
 
-            <div class="quick-links">
+        <div class="honeycomb-container">
+          <div class="circle-grid" id="circle-grid">
+            <!-- Circular grid will be generated here by script.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Page 3: Dev Tools -->
+      <div class="dev-tools" id="page3">
+        <div class="dev-tools-header">
+          <h2 class="dev-tools-title">Developer Hub</h2>
+          <p class="dev-tools-subtitle">Your development workspace</p>
+        </div>
+
+        <div class="dev-tools-grid">
+          <div class="dev-tools-section">
+            <h3>Quick Actions</h3>
+            <div class="quick-actions">
               <a href="https://github.com" target="_blank" class="quick-link">
                 <img src="icons/github.svg" alt="GitHub" />
                 <span>GitHub</span>
@@ -63,25 +113,16 @@
               </a>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Page 2: Circular Icons Grid -->
-      <div class="page" id="page2">
-        <div class="honeycomb-container">
-          <div class="circle-grid" id="circle-grid">
-            <!-- Circular grid will be generated here by script.js -->
+          <div class="dev-tools-section">
+            <h3>Recent Projects</h3>
+            <div class="project-list">
+              <div class="project-item">
+                <span class="project-name">New Tab Extension</span>
+                <span class="project-status">Active</span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      <!-- Page 3: Dev Tools -->
-      <div class="page" id="page3">
-        <div class="devtools-container">
-          <h2 class="devtools-title">Dev Tools</h2>
-          <p class="devtools-text">
-            Developer tools will be added here in future updates.
-          </p>
         </div>
       </div>
     </div>

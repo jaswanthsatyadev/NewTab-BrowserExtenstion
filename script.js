@@ -3,8 +3,10 @@ document.addEventListener("DOMContentLoaded", () => {
   updateTimeAndDate();
   setInterval(updateTimeAndDate, 1000);
 
-  // Set up page navigation
-  setupPageNavigation();
+  // Initialize 3D layout and navigation
+  initialize3DLayout();
+  initializePageNavigation();
+  initializeLockScreen();
 
   // Load icons in circular grid
   const grid = document.querySelector(".circle-grid");
@@ -160,7 +162,50 @@ document.addEventListener("DOMContentLoaded", () => {
         a.style.animationDelay = `${index * 0.05}s`;
       });
     })
-    .catch((error) => console.error("Error loading site data:", error));
+    .catch((error) => {
+      console.error("Error loading site data:", error);
+      // Fallback content for dashboard
+      const grid = document.querySelector(".circle-grid");
+      if (grid) {
+        const fallbackSites = [
+          { url: "https://google.com", name: "Google", icon: "google" },
+          { url: "https://github.com", name: "GitHub", icon: "github" },
+          { url: "https://youtube.com", name: "YouTube", icon: "youtube" },
+          { url: "https://gmail.com", name: "Gmail", icon: "gmail" }
+        ];
+        
+        fallbackSites.forEach((site, index) => {
+          const a = document.createElement("a");
+          a.href = site.url;
+          a.target = "_blank";
+          
+          const circleIcon = document.createElement("div");
+          circleIcon.className = "circle-icon";
+          
+          const img = document.createElement("img");
+          img.src = `icons/${site.icon}.svg`;
+          img.alt = site.name;
+          img.onerror = () => {
+            const letterDiv = document.createElement("div");
+            letterDiv.className = "letter-icon";
+            letterDiv.textContent = site.name.charAt(0);
+            circleIcon.innerHTML = "";
+            circleIcon.appendChild(letterDiv);
+          };
+          
+          circleIcon.appendChild(img);
+          
+          const span = document.createElement("span");
+          span.textContent = site.name;
+          
+          a.appendChild(circleIcon);
+          a.appendChild(span);
+          a.style.animationDelay = `${index * 0.05}s`;
+          
+          grid.appendChild(a);
+        });
+      }
+    });
 });
 
 // Wallpaper rotation functionality
@@ -183,10 +228,16 @@ function initializeWallpaperRotation() {
   const wallpaperIndex = dayOfYear % wallpapers.length;
   const selectedWallpaper = wallpapers[wallpaperIndex];
 
-  // Apply wallpaper to page 1
-  const page1 = document.getElementById("page1");
-  if (page1) {
-    page1.style.backgroundImage = `url('${wallpapersDir}${selectedWallpaper}')`;
+  // Apply wallpaper to lock screen background
+  const lockScreenBg = document.querySelector(".lock-screen-bg");
+  if (lockScreenBg) {
+    lockScreenBg.style.backgroundImage = `url('${wallpapersDir}${selectedWallpaper}')`;
+  }
+
+  // Also apply to dashboard background
+  const dashboard = document.querySelector(".dashboard");
+  if (dashboard) {
+    dashboard.style.backgroundImage = `url('${wallpapersDir}${selectedWallpaper}')`;
   }
 }
 
@@ -210,84 +261,202 @@ function updateTimeAndDate() {
   dateElement.textContent = dateString;
 }
 
-// Function to set up page navigation
-function setupPageNavigation() {
-  const pages = document.querySelectorAll(".page");
-  const dots = document.querySelectorAll(".dot");
-  let currentPage = 0;
-  const totalPages = pages.length;
+// 3D page navigation variables
+let currentPage = 0; // 0 = lock screen, 1 = dashboard, 2 = dev tools
+const totalPages = 3;
+let isLocked = true;
 
-  // Initialize dot click handlers
+// Initialize 3D layout and navigation
+document.addEventListener("DOMContentLoaded", function () {
+  initialize3DLayout();
+  initializePageNavigation();
+  initializeLockScreen();
+});
+
+function initialize3DLayout() {
+  updatePageOverlay();
+  window.addEventListener("resize", updatePageOverlay);
+}
+
+function initializeLockScreen() {
+  const lockScreen = document.querySelector(".lock-screen");
+
+  if (lockScreen) {
+    lockScreen.addEventListener("click", unlockScreen);
+    lockScreen.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        unlockScreen();
+      }
+    });
+
+    let touchStartY = 0;
+    lockScreen.addEventListener("touchstart", (e) => {
+      touchStartY = e.touches[0].clientY;
+    });
+
+    lockScreen.addEventListener("touchend", (e) => {
+      const touchEndY = e.changedTouches[0].clientY;
+      const swipeDistance = touchStartY - touchEndY;
+
+      if (swipeDistance > 100) {
+        unlockScreen();
+      }
+    });
+
+    updateLockScreenTime();
+    setInterval(updateLockScreenTime, 60000);
+  }
+}
+
+function unlockScreen() {
+  console.log("unlockScreen called, isLocked:", isLocked);
+  if (isLocked) {
+    isLocked = false;
+    setActivePage(1);
+    console.log("Unlocked, currentPage:", currentPage);
+  }
+}
+
+function updateLockScreenTime() {
+  const timeElement = document.querySelector(".lock-screen .time");
+  const dateElement = document.querySelector(".lock-screen .date");
+
+  if (timeElement && dateElement) {
+    const now = new Date();
+
+    const hours = now.getHours().toString().padStart(2, "0");
+    const minutes = now.getMinutes().toString().padStart(2, "0");
+    timeElement.textContent = `${hours}:${minutes}`;
+
+    const options = { weekday: "long", month: "long", day: "numeric" };
+    dateElement.textContent = now.toLocaleDateString("en-US", options);
+  }
+}
+
+function initializePageNavigation() {
+  const dots = document.querySelectorAll(".dot");
+
+  setActivePage(0);
+
   dots.forEach((dot, index) => {
     dot.addEventListener("click", () => {
-      navigateToPage(index);
+      if (index === 0 && !isLocked) {
+        isLocked = true;
+        setActivePage(0);
+      } else if (index > 0) {
+        setActivePage(index);
+      }
     });
   });
 
-  // Handle wheel events for scrolling between pages
-  let isScrolling = false;
   document.addEventListener("wheel", (event) => {
-    if (isScrolling) return;
-    isScrolling = true;
+    if (isLocked) {
+      if (event.deltaY > 0) {
+        unlockScreen();
+      }
+      return;
+    }
 
     if (event.deltaY > 0) {
-      // Scroll down - go to next page
-      navigateToPage(Math.min(currentPage + 1, totalPages - 1));
+      navigateToNext();
     } else {
-      // Scroll up - go to previous page
-      navigateToPage(Math.max(currentPage - 1, 0));
+      navigateToPrevious();
     }
-
-    // Debounce scrolling
-    setTimeout(() => {
-      isScrolling = false;
-    }, 800);
   });
 
-  // Handle touch events for mobile devices
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+      if (currentPage === 0 && isLocked) {
+        unlockScreen();
+      } else {
+        navigateToNext();
+      }
+    } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+      navigateToPrevious();
+    } else if (e.key === "Escape") {
+      isLocked = true;
+      setActivePage(0);
+    }
+  });
+
   let touchStartY = 0;
-  document.addEventListener("touchstart", (event) => {
-    touchStartY = event.touches[0].clientY;
+  document.addEventListener("touchstart", (e) => {
+    touchStartY = e.touches[0].clientY;
   });
 
-  document.addEventListener("touchend", (event) => {
-    const touchEndY = event.changedTouches[0].clientY;
+  document.addEventListener("touchend", (e) => {
+    const touchEndY = e.changedTouches[0].clientY;
     const diff = touchStartY - touchEndY;
 
-    // If the swipe is significant enough
     if (Math.abs(diff) > 50) {
       if (diff > 0) {
-        // Swipe up - go to next page
-        navigateToPage(Math.min(currentPage + 1, totalPages - 1));
+        if (currentPage === 0 && isLocked) {
+          unlockScreen();
+        } else {
+          navigateToNext();
+        }
       } else {
-        // Swipe down - go to previous page
-        navigateToPage(Math.max(currentPage - 1, 0));
+        navigateToPrevious();
       }
     }
   });
+}
 
-  // Function to navigate to a specific page
-  function navigateToPage(pageIndex) {
-    if (pageIndex === currentPage) return;
+function updatePageOverlay() {
+  const lockScreen = document.querySelector(".lock-screen");
+  const dashboard = document.querySelector(".dashboard");
+  const devTools = document.querySelector(".dev-tools");
+  console.log("updatePageOverlay called, currentPage:", currentPage);
+  [lockScreen, dashboard, devTools].forEach((page) => {
+    if (page) {
+      page.classList.remove("active", "inactive");
+    }
+  });
+  if (currentPage === 0) {
+    lockScreen?.classList.add("active");
+    dashboard?.classList.add("inactive");
+    devTools?.classList.add("inactive");
+  } else if (currentPage === 1) {
+    lockScreen?.classList.add("inactive");
+    dashboard?.classList.add("active");
+    devTools?.classList.add("inactive");
+  } else if (currentPage === 2) {
+    lockScreen?.classList.add("inactive");
+    dashboard?.classList.add("inactive");
+    devTools?.classList.add("active");
+  }
+  console.log("Classes after update:", {
+    lockScreen: lockScreen?.className,
+    dashboard: dashboard?.className,
+    devTools: devTools?.className,
+  });
+}
 
-    // Update active page
-    pages.forEach((page, index) => {
-      if (index === pageIndex) {
-        page.classList.add("active");
-      } else {
-        page.classList.remove("active");
-      }
-    });
+function setActivePage(pageNum) {
+  console.log("setActivePage called with pageNum:", pageNum);
+  currentPage = pageNum;
 
-    // Update active dot
-    dots.forEach((dot, index) => {
-      if (index === pageIndex) {
-        dot.classList.add("active");
-      } else {
-        dot.classList.remove("active");
-      }
-    });
+  document.querySelectorAll(".dot").forEach((dot, index) => {
+    dot.classList.toggle("active", index === pageNum);
+  });
 
-    currentPage = pageIndex;
+  updatePageOverlay();
+  console.log("Page overlay updated, currentPage:", currentPage);
+}
+
+function navigateToNext() {
+  if (currentPage < totalPages - 1) {
+    setActivePage(currentPage + 1);
+  }
+}
+
+function navigateToPrevious() {
+  if (currentPage > 0) {
+    if (currentPage === 1 && !isLocked) {
+      isLocked = true;
+      setActivePage(0);
+    } else {
+      setActivePage(currentPage - 1);
+    }
   }
 }
