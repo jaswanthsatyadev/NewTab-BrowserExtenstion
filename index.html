@@ -13,48 +13,25 @@
 
   <body class="bg-gray-900 text-white">
     <div class="viewport-container">
-      <!-- Page Navigation Dots -->
       <div class="page-dots">
-        <div class="dot active" data-page="0"></div>
+        <div class="dot" data-page="0"></div>
         <div class="dot" data-page="1"></div>
         <div class="dot" data-page="2"></div>
       </div>
 
-      <!-- Page 1: Lock Screen -->
-      <div class="lock-screen active" id="page1">
-        <div class="lock-screen-bg" id="lockScreenBg"></div>
+      <div class="page lock-screen" id="page-0">
+        <div class="lock-screen-bg"></div>
         <div class="lock-screen-content">
           <div class="lock-screen-center">
             <div class="time-display">
               <h1 id="current-time" class="time">00:00</h1>
               <p id="current-date" class="date">Monday, January 1</p>
             </div>
-
-            <div class="lock-screen-info">
-              <div class="weather-widget">
-                <div class="weather-icon">☀️</div>
-                <div class="weather-text">
-                  <span class="weather-temp">72°F</span>
-                  <span class="weather-desc">Sunny</span>
-                </div>
-              </div>
-
-              <div class="notifications">
-                <div class="notification">
-                  <span class="notification-icon">📧</span>
-                  <span class="notification-text">3 new emails</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="unlock-hint">
-              <div class="unlock-text">Scroll up to unlock</div>
-              <div class="unlock-animation">
-                <div class="unlock-bar"></div>
-              </div>
-            </div>
           </div>
-
+           <div class="unlock-hint">
+              <div class="unlock-text">Scroll to unlock</div>
+              <div class="unlock-animation"></div>
+            </div>
           <div class="search-container">
             <form
               action="https://www.google.com/search"
@@ -70,27 +47,22 @@
         </div>
       </div>
 
-      <!-- Page 2: Dashboard -->
-      <div class="dashboard" id="page2">
+      <div class="page dashboard" id="page-1">
         <div class="dashboard-header">
           <h2 class="dashboard-title">Dashboard</h2>
           <div class="dashboard-date" id="dashboard-date"></div>
         </div>
-
         <div class="honeycomb-container">
           <div class="circle-grid" id="circle-grid">
-            <!-- Circular grid will be generated here by script.js -->
-          </div>
+            </div>
         </div>
       </div>
 
-      <!-- Page 3: Dev Tools -->
-      <div class="dev-tools" id="page3">
+      <div class="page dev-tools" id="page-2">
         <div class="dev-tools-header">
           <h2 class="dev-tools-title">Developer Hub</h2>
           <p class="dev-tools-subtitle">Your development workspace</p>
         </div>
-
         <div class="dev-tools-grid">
           <div class="dev-tools-section">
             <h3>Quick Actions</h3>
@@ -103,17 +75,12 @@
                 <img src="icons/linkedin.svg" alt="LinkedIn" />
                 <span>LinkedIn</span>
               </a>
-              <a
-                href="https://chat.openai.com"
-                target="_blank"
-                class="quick-link"
-              >
+              <a href="https://chat.openai.com" target="_blank" class="quick-link">
                 <img src="icons/telegram.svg" alt="ChatGPT" />
                 <span>ChatGPT</span>
               </a>
             </div>
           </div>
-
           <div class="dev-tools-section">
             <h3>Recent Projects</h3>
             <div class="project-list">
