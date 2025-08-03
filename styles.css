@@ -5,7 +5,6 @@ body {
   color: white;
   height: 100vh;
   overflow: hidden;
-  /* New beautiful, dark background */
   background-color: #0b0715;
   background-image: radial-gradient(
     circle at 1px 1px,
@@ -76,7 +75,7 @@ body {
   align-items: center;
   transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1),
     opacity 1.2s cubic-bezier(0.65, 0, 0.35, 1);
-  overflow: auto;
+  overflow: hidden; /* Changed to hidden to contain backgrounds */
   opacity: 0;
   visibility: hidden;
   z-index: 1;
@@ -87,15 +86,12 @@ body {
   visibility: visible;
   z-index: 2;
 }
-/* For scrolling FORWARD (slide up) */
 .page.is-leaving {
   transform: translateY(-100%);
-  opacity: 1;
   z-index: 3;
 }
-/* For scrolling BACKWARD (fade down) */
 .page.is-returning {
-  opacity: 1;
+  transform: translateY(0%);
   z-index: 3;
 }
 
@@ -109,7 +105,7 @@ body {
   background-size: cover;
   background-position: center;
   transition: filter 1.5s ease, transform 1.5s ease;
-  filter: blur(12px) brightness(0.6);
+  filter: blur(0px) brightness(1);
   transform: scale(1.1);
 }
 .lock-screen.active .lock-screen-bg {
@@ -174,6 +170,11 @@ body {
 }
 .search-box:hover {
   background: rgba(20, 15, 35, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  transform: scale(1.05);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 .search-box input {
   background: transparent;
@@ -183,10 +184,12 @@ body {
   width: 100%;
   outline: none;
   margin-left: 0.75rem;
+  transition: all 0.3s ease;
+  
 }
 .lock-screen-quick-links {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
 }
 .quick-link {
   display: flex;
@@ -213,8 +216,30 @@ body {
 }
 
 /* --- Dashboard & Icons --- */
-.dashboard {
-  background: linear-gradient(135deg, #1a1032 0%, #0b0715 100%);
+.dashboard-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: filter 1.5s ease, transform 1.5s ease;
+  filter: blur(1px) brightness(0.8);
+  transform: scale(1.1);
+}
+.dashboard.active .dashboard-bg {
+  filter: blur(0.1px) brightness(0.4);
+  transform: scale(1);
+}
+.dashboard-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .circle-grid {
   display: grid;
