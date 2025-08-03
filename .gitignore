@@ -1,0 +1,57 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+node_modules/
+jspm_packages/
+web_modules/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Editor directories and files
+.trae/ 
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Build artifacts
+dist/
+build/
+.parcel-cache/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Trashes
+EhThumbs.db
+Thumbs.db
+
+# dotenv environment variables file
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# misc
+*.bak
+*.orig
+*.swp
+*.swo
+*.tmp
+
+# Backup files
+*~
+
+# System files
+.localized

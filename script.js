@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     splashScreen.style.opacity = '0';
     setTimeout(() => {
       splashScreen.style.display = 'none';
-    }, 0);
+    }, 800);
   }
   setTimeout(hideSplashScreen, 2300);
 
@@ -32,12 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
       oldPage.classList.add('is-returning');
     }
-    
-    const scrolltimeout = isScrollingForward ? 800 : 300;
+
+    const scrollTimeout = isScrollingForward ? 800 : 200;
     setTimeout(() => {
       oldPage.classList.remove('active', 'is-leaving', 'is-returning');
       isAnimating = false;
-    }, scrolltimeout);
+    }, scrollTimeout);
 
     currentPage = newIndex;
     dots.forEach((dot, index) => {
@@ -89,27 +89,16 @@ document.addEventListener("DOMContentLoaded", () => {
       "wallpapers/pexels-eberhardgross-640781.jpg",
     ];
     
-    // Get both background elements
     const lockScreenBg = document.querySelector(".lock-screen-bg");
     const dashboardBg = document.querySelector(".dashboard-bg");
-
     const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-
-    // Calculate index for Page 1 (Lock Screen)
     const wallpaperIndex1 = dayOfYear % wallpapers.length;
     const wallpaperUrl1 = wallpapers[wallpaperIndex1];
-
-    // Calculate index for Page 2 (Dashboard), offset by 1
     const wallpaperIndex2 = (dayOfYear + 1) % wallpapers.length;
     const wallpaperUrl2 = wallpapers[wallpaperIndex2];
 
-    // Apply wallpapers
-    if (lockScreenBg) {
-        lockScreenBg.style.backgroundImage = `url('${wallpaperUrl1}')`;
-    }
-    if (dashboardBg) {
-        dashboardBg.style.backgroundImage = `url('${wallpaperUrl2}')`;
-    }
+    if (lockScreenBg) lockScreenBg.style.backgroundImage = `url('${wallpaperUrl1}')`;
+    if (dashboardBg) dashboardBg.style.backgroundImage = `url('${wallpaperUrl2}')`;
   }
 
   function initializeWeather() {
@@ -150,48 +139,62 @@ document.addEventListener("DOMContentLoaded", () => {
     return "❓";
   }
 
+  // --- UPDATED FUNCTION ---
   function loadDashboardIcons() {
     const grid = document.getElementById("circle-grid");
     if (!grid) return;
-    fetch("Daily New Tab backup - 2025.07.27 - 23 11 20.json")
+
+    // Fetch from the new, simplified JSON file
+    fetch("bookmarks.json")
       .then(response => response.ok ? response.json() : Promise.reject('Network error'))
       .then(data => {
-        const sites = data.bookmark;
+        const sites = data.bookmarks; // Use the "bookmarks" array
         if (!sites) return;
+
         const iconMap = {
           envelope: "gmail", amazon: "amazon", "dice-d20": "awesomesheet", "reddit-alien": "reddit",
           film: "netflix", "google-drive": "drive", code: "devdocs", github: "github", youtube: "youtube",
           robot: "gemini", cloud: "clawcloud", "graduation-cap": "coursera", linkedin: "linkedin",
           "map-marker-alt": "maps", google: "google", sitemap: "roadmap", telegram: "telegram",
         };
+
         sites.forEach(site => {
           const a = document.createElement("a");
           a.href = site.url;
           a.target = "_blank";
           const circleIcon = document.createElement("div");
           circleIcon.className = "circle-icon";
-          let iconSrc = `icons/${iconMap[site.display.visual.icon.name] || 'google'}.svg`;
-          if (site.display.visual.type === "image" && site.display.visual.image.url) {
-            iconSrc = site.display.visual.image.url;
+
+          let iconSrc;
+          // Use the simplified structure
+          if (site.visual.type === "image" && site.visual.imageUrl) {
+            iconSrc = site.visual.imageUrl;
+          } else {
+            iconSrc = `icons/${iconMap[site.visual.iconName] || 'google'}.svg`;
           }
+
           const img = document.createElement("img");
-img.src = iconSrc;
-img.alt = site.display.name.text || "icon";
-img.onerror = () => { img.src = "icons/google.svg"; };
-circleIcon.appendChild(img);
-const span = document.createElement("span");
-span.textContent = site.display.name.text || site.url.split('/')[2].replace('www.','');
-a.appendChild(circleIcon);
-a.appendChild(span);
-grid.appendChild(a);
-});
-})
-.catch(error => console.error("Error loading dashboard icons:", error));
-}
-// --- Run Everything ---
-initializeNavigation();
-initializeDateTime();
-initializeWallpaper();
-initializeWeather();
-loadDashboardIcons();
+          img.src = iconSrc;
+          img.alt = site.name || "icon";
+          img.onerror = () => { img.src = "icons/google.svg"; };
+          
+          circleIcon.appendChild(img);
+          
+          const span = document.createElement("span");
+          span.textContent = site.name; // Use simplified name property
+          
+          a.appendChild(circleIcon);
+          a.appendChild(span);
+          grid.appendChild(a);
+        });
+      })
+      .catch(error => console.error("Error loading dashboard icons:", error));
+  }
+
+  // --- Run Everything ---
+  initializeNavigation();
+  initializeDateTime();
+  initializeWallpaper();
+  initializeWeather();
+  loadDashboardIcons();
 });

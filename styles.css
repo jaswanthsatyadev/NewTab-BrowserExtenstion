@@ -236,7 +236,7 @@ body {
   transform: scale(1.1);
 }
 .dashboard.active .dashboard-bg {
-  filter: blur(0.1px) brightness(0.4);
+  filter: blur(0px) brightness(0.5);
   transform: scale(1);
 }
 .dashboard-content {
@@ -279,10 +279,11 @@ body {
   align-items: center;
   background: linear-gradient(
     145deg,
-    rgba(255, 255, 255, 0.05),
-    rgba(255, 255, 255, 0)
+    rgba(114, 81, 216, 0.5),
+    rgba(16, 7, 43, 0.5)
   );
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(3px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   transition: all 0.4s ease;
 }
@@ -290,6 +291,7 @@ body {
   transform: translateY(-8px) scale(1.05);
   box-shadow: 0 0 25px rgba(120, 80, 220, 0.4), 0 12px 40px rgba(0, 0, 0, 0.3);
   border-color: rgba(120, 80, 220, 0.5);
+
 }
 .circle-icon img {
   width: 48px;
@@ -299,6 +301,8 @@ body {
 }
 .circle-grid a:hover .circle-icon img {
   transform: scale(1.1);
+  filter: hue-rotate(180deg);
+  transition: all 0.4s ease;
 }
 
 /* --- Dev Tools & Dots --- */

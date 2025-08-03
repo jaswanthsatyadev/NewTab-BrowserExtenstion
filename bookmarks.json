@@ -1,0 +1,119 @@
+{
+  "bookmarks": [
+    {
+      "url": "https://mail.google.com/",
+      "name": "Gmail",
+      "visual": { "type": "icon", "iconName": "envelope", "imageUrl": "" }
+    },
+    {
+      "url": "https://www.amazon.in/",
+      "name": "Amazon",
+      "visual": { "type": "icon", "iconName": "amazon", "imageUrl": "" }
+    },
+    {
+      "url": "https://zombiefox.github.io/awesomeSheet/",
+      "name": "awesomeSheet",
+      "visual": { "type": "icon", "iconName": "dice-d20", "imageUrl": "" }
+    },
+    {
+      "url": "https://www.reddit.com/",
+      "name": "Reddit",
+      "visual": { "type": "icon", "iconName": "reddit-alien", "imageUrl": "" }
+    },
+    {
+      "url": "https://www.netflix.com/",
+      "name": "Netflix",
+      "visual": { "type": "icon", "iconName": "film", "imageUrl": "" }
+    },
+    {
+      "url": "https://drive.google.com/drive/",
+      "name": "Drive",
+      "visual": { "type": "icon", "iconName": "google-drive", "imageUrl": "" }
+    },
+    {
+      "url": "https://devdocs.io/",
+      "name": "Devdocs",
+      "visual": { "type": "icon", "iconName": "code", "imageUrl": "" }
+    },
+    {
+      "url": "https://github.com/",
+      "name": "Github",
+      "visual": { "type": "icon", "iconName": "github", "imageUrl": "" }
+    },
+    {
+      "url": "https://www.youtube.com/",
+      "name": "Youtube",
+      "visual": { "type": "icon", "iconName": "youtube", "imageUrl": "" }
+    },
+    {
+      "url": "https://gemini.google.com/app",
+      "name": "Gemini",
+      "visual": { "type": "icon", "iconName": "robot", "imageUrl": "" }
+    },
+    {
+      "url": "https://unstop.com/",
+      "name": "UnStop",
+      "visual": { "type": "image", "iconName": "", "imageUrl": "icons/unstop.svg" }
+    },
+    {
+      "url": "https://ap-southeast-1.run.claw.cloud/",
+      "name": "Cloud Run",
+      "visual": { "type": "icon", "iconName": "cloud", "imageUrl": "" }
+    },
+    {
+      "url": "https://hianime.to/home",
+      "name": "HiAnime",
+      "visual": { "type": "image", "iconName": "", "imageUrl": "icons/hianime.svg" }
+    },
+    {
+      "url": "https://chatgpt.com/",
+      "name": "ChatGPT",
+      "visual": { "type": "image", "iconName": "", "imageUrl": "https://freepnglogo.com/images/all_img/chat-gpt-logo-vector-black-3ded.png" }
+    },
+    {
+      "url": "https://www.coursera.org/",
+      "name": "Coursera",
+      "visual": { "type": "icon", "iconName": "graduation-cap", "imageUrl": "" }
+    },
+    {
+      "url": "https://www.linkedin.com/feed/",
+      "name": "LinkedIn",
+      "visual": { "type": "icon", "iconName": "linkedin", "imageUrl": "" }
+    },
+    {
+      "url": "https://learning.ccbp.in/my-journey",
+      "name": "NxtWave",
+      "visual": { "type": "image", "iconName": "", "imageUrl": "icons/nxtwave.svg" }
+    },
+    {
+      "url": "https://www.udemy.com/",
+      "name": "Udemy",
+      "visual": { "type": "image", "iconName": "", "imageUrl": "https://www.udemy.com/staticx/udemy/images/v7/logo-udemy.svg" }
+    },
+    {
+      "url": "https://www.google.com/maps/",
+      "name": "Google Maps",
+      "visual": { "type": "icon", "iconName": "map-marker-alt", "imageUrl": "" }
+    },
+    {
+      "url": "https://www.google.com/",
+      "name": "Google",
+      "visual": { "type": "icon", "iconName": "google", "imageUrl": "" }
+    },
+    {
+      "url": "https://roadmap.sh/",
+      "name": "RoadMap",
+      "visual": { "type": "icon", "iconName": "sitemap", "imageUrl": "" }
+    },
+    {
+      "url": "https://leetcode.com/explore/",
+      "name": "LeetCode",
+      "visual": { "type": "icon", "iconName": "code", "imageUrl": "" }
+    },
+    {
+      "url": "https://web.telegram.org/a/",
+      "name": "Telegram",
+      "visual": { "type": "icon", "iconName": "telegram", "imageUrl": "" }
+    }
+  ]
+}
