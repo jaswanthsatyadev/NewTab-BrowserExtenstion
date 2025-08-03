@@ -54,54 +54,104 @@ document.addEventListener("DOMContentLoaded", () => {
           github: "github",
           youtube: "youtube",
           robot: "gemini",
-          cloud: "cloud",
+          cloud: "clawcloud",
           "graduation-cap": "coursera",
           linkedin: "linkedin",
           "map-marker-alt": "maps",
           google: "google",
           sitemap: "roadmap",
           telegram: "telegram",
+          chatgpt: "chatgpt",
+          clawcloud: "clawcloud",
+          hianime: "hianime",
+          n8n: "n8n",
+          nxtwave: "nxtwave",
+          udemy: "udemy",
+          unstop: "unstop",
+          leetcode: "leetcode",
         };
 
+        // Handle different visual types
         if (
           site.display.visual.type === "image" &&
           site.display.visual.image.url
         ) {
-          // Check if the image URL is from an external source that might not be available
-          if (
-            site.display.visual.image.url.includes("registry.npmmirror.com") ||
-            !site.display.visual.image.url.startsWith("icons/")
-          ) {
-            // Use a fallback icon instead
-            img.src = "icons/google.svg";
-          } else {
-            img.src = site.display.visual.image.url;
-          }
-        } else if (site.display.visual.icon && site.display.visual.icon.name) {
-          const iconName = site.display.visual.icon.name;
-          const fileName =
-            iconMap[iconName] ||
-            iconName.replace(/-alt$/, "").replace(/ /g, "-");
-
-          // Check if the icon file exists in our icons directory
-          const iconPath = `icons/${fileName}.svg`;
-          img.src = iconPath;
-
-          // Add error handler to use fallback if icon doesn't load
+          // Use custom image if available
+          const img = document.createElement("img");
+          img.src = site.display.visual.image.url;
+          img.alt = site.display.name.text || "Site icon";
           img.onerror = function () {
             this.src = "icons/google.svg";
-            this.onerror = null; // Prevent infinite loop
+            this.onerror = null;
           };
+          circleIcon.appendChild(img);
+        } else if (
+          site.display.visual.type === "icon" &&
+          site.display.visual.icon.name
+        ) {
+          // Map FontAwesome icon names to our SVG files
+          const iconName = site.display.visual.icon.name;
+          const mappedName = iconMap[iconName];
+          const iconSrc = mappedName
+            ? `icons/${mappedName}.svg`
+            : `icons/${iconName}.svg`;
+
+          const img = document.createElement("img");
+          img.src = iconSrc;
+          img.alt = site.display.name.text || "Site icon";
+          img.onerror = function () {
+            this.src = "icons/google.svg";
+            this.onerror = null;
+          };
+          circleIcon.appendChild(img);
+        } else if (site.display.visual.type === "letter") {
+          // Check if we have a custom icon for letter-type sites
+          const siteName = site.display.name.text || site.url;
+          let iconFile = null;
+
+          if (site.url.includes("unstop.com")) {
+            iconFile = "unstop.svg";
+          } else if (site.url.includes("hianime.to")) {
+            iconFile = "hianime.svg";
+          } else if (
+            site.url.includes("nxtwave") ||
+            site.url.includes("ccbp.in")
+          ) {
+            iconFile = "nxtwave.svg";
+          }
+
+          if (iconFile) {
+            const img = document.createElement("img");
+            img.src = `icons/${iconFile}`;
+            img.alt = site.display.name.text || "Site icon";
+            img.onerror = function () {
+              // Fallback to letter if icon fails
+              const letterDiv = document.createElement("div");
+              letterDiv.className = "letter-icon";
+              letterDiv.textContent = site.display.visual.letter.text;
+              circleIcon.innerHTML = "";
+              circleIcon.appendChild(letterDiv);
+            };
+            circleIcon.appendChild(img);
+          } else {
+            // Use letter as fallback
+            const letterDiv = document.createElement("div");
+            letterDiv.className = "letter-icon";
+            letterDiv.textContent = site.display.visual.letter.text;
+            circleIcon.appendChild(letterDiv);
+          }
         } else {
-          // Fallback for items with no icon name
-          img.src = "icons/google.svg"; // A default icon
+          // Fallback to google icon
+          const img = document.createElement("img");
+          img.src = "icons/google.svg";
+          img.alt = site.display.name.text || "Site icon";
+          circleIcon.appendChild(img);
         }
-        img.alt = site.display.name.text;
 
         const span = document.createElement("span");
-        span.textContent = site.display.name.text;
+        span.textContent =
+          site.display.name.text || site.display.visual.letter.text || "";
 
-        circleIcon.appendChild(img);
         a.appendChild(circleIcon);
         a.appendChild(span);
         grid.appendChild(a);
@@ -115,31 +165,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Wallpaper rotation functionality
 function initializeWallpaperRotation() {
-  const wallpapersDir = 'wallpapers/';
+  const wallpapersDir = "wallpapers/";
   const wallpapers = [
-    '1.jpg',
-    'pexels-eberhardgross-1421903.jpg',
-    'pexels-eberhardgross-1612351.jpg',
-    'pexels-life-of-pix-7919.jpg'
+    "pexels-bess-hamiti-83687-36487.jpg",
+    "pexels-eberhardgross-1421903.jpg",
+    "pexels-eberhardgross-1612351.jpg",
+    "pexels-eberhardgross-640781.jpg",
   ];
 
   // Get today's date
   const today = new Date();
-  const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-  
+  const dayOfYear = Math.floor(
+    (today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24)
+  );
+
   // Calculate wallpaper index based on day
   const wallpaperIndex = dayOfYear % wallpapers.length;
   const selectedWallpaper = wallpapers[wallpaperIndex];
-  
+
   // Apply wallpaper to page 1
-  const page1 = document.getElementById('page1');
+  const page1 = document.getElementById("page1");
   if (page1) {
     page1.style.backgroundImage = `url('${wallpapersDir}${selectedWallpaper}')`;
   }
 }
 
 // Initialize wallpaper rotation when DOM is loaded
-document.addEventListener('DOMContentLoaded', initializeWallpaperRotation);
+document.addEventListener("DOMContentLoaded", initializeWallpaperRotation);
 
 // Function to update time and date
 function updateTimeAndDate() {
