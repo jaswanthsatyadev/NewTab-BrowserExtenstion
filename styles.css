@@ -106,7 +106,7 @@ body {
   background-position: center;
   transition: filter 1.5s ease, transform 1.5s ease;
   filter: blur(0px) brightness(1);
-  transform: scale(1.1);
+  transform: scale(1);
 }
 .lock-screen.active .lock-screen-bg {
   filter: blur(0px) brightness(1);
@@ -119,9 +119,10 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 3rem 2rem;
+  padding: 2rem 3rem;
+  
 }
 .lock-screen-center {
   text-align: center;
@@ -144,9 +145,9 @@ body {
   gap: 0.75rem;
   margin-top: 1.5rem;
   padding: 0.75rem 1.5rem;
-  background: rgba(20, 15, 35, 0.5);
+  background: rgba(63, 0, 253, 0.822);
   border-radius: 9999px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(1px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 1.2rem;
   font-weight: 400;
@@ -190,6 +191,7 @@ body {
 .lock-screen-quick-links {
   display: flex;
   gap: 2rem;
+  margin-top: 3rem;
 }
 .quick-link {
   display: flex;
@@ -199,7 +201,7 @@ body {
   text-decoration: none;
   color: white;
   padding: 1rem;
-  background: rgba(20, 15, 35, 0.5);
+  background: rgba(227, 180, 241, 0.356);
   border-radius: 1rem;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -207,8 +209,13 @@ body {
   width: 100px;
 }
 .quick-link:hover {
-  transform: translateY(-5px);
-  background: rgba(20, 15, 35, 0.7);
+  background: rgba(23, 6, 172, 0.616);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  
 }
 .quick-link img {
   width: 32px;
