@@ -1,4 +1,4 @@
-This is a new tab extension where you can overide your boring old brower tab design 
+This is a new tab extension where you can over-ride your boring old tab design and layout 
 
 #How to apply:
 
