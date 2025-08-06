@@ -80,14 +80,196 @@
         </div>
       </div>
 
-      <!-- Page 3: Dev Tools (Empty as requested) -->
+      <!-- Page 3: Dev Tools -->
       <div class="page dev-tools" id="page-2">
         <div class="dev-tools-header">
           <h2 class="dev-tools-title">Developer Hub</h2>
         </div>
+        <div class="tools-container">
+          <!-- File to PDF Converter -->
+          <div class="tool-card">
+            <h3>File to PDF Converter</h3>
+            <div class="converter-container">
+              <div class="file-upload-area" id="dropZone">
+                <input type="file" id="fileInput" class="file-input" accept=".doc,.docx,.txt,.rtf,.odt,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png" multiple>
+                <div class="upload-content">
+                  <img src="icons/upload.svg" alt="Upload" class="upload-icon">
+                  <p>Drag & drop files here or click to browse</p>
+                  <p class="file-types">Supported formats: DOC, DOCX, TXT, RTF, ODT, XLS, XLSX, PPT, PPTX, JPG, PNG</p>
+                </div>
+              </div>
+              <div class="converter-options" id="converterOptions" style="display: none;">
+                <div class="file-info">
+                  <span id="fileName"></span>
+                  <span id="fileSize"></span>
+                </div>
+                <div class="converter-actions">
+                  <button id="convertBtn" class="btn">Convert to PDF</button>
+                  <button id="clearBtn" class="btn btn-outline">Clear</button>
+                </div>
+              </div>
+              <div id="previewContainer" class="preview-container"></div>
+              <div id="progressBar" class="progress-bar" style="display: none;">
+                <div class="progress"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Notes -->
+          <div class="tool-card">
+            <div class="tool-header">
+              <h3>Quick Notes</h3>
+              <div class="tool-actions">
+                <button id="clearNotes" class="btn-icon" title="Clear notes">
+                  <span class="icon">🗑️</span>
+                </button>
+              </div>
+            </div>
+            <textarea id="quickNotes" class="notes-area" placeholder="Type your quick notes here..."></textarea>
+            <div class="notes-status" id="notesStatus">Auto-saved</div>
+          </div>
+
+          <!-- Markdown/Plain Text Scratchpad -->
+          <div class="tool-card">
+            <div class="tool-header">
+              <h3>Markdown Scratchpad</h3>
+              <div class="tool-actions">
+                <button id="togglePreview" class="btn-icon" title="Toggle preview">
+                  <span class="icon">👁️</span>
+                </button>
+                <button id="clearScratchpad" class="btn-icon" title="Clear scratchpad">
+                  <span class="icon">🗑️</span>
+                </button>
+              </div>
+            </div>
+            <div class="scratchpad-container">
+              <div class="scratchpad-editor">
+                <textarea id="markdownInput" class="markdown-input" placeholder="Write your markdown here..."></textarea>
+              </div>
+              <div id="markdownPreview" class="markdown-preview"></div>
+            </div>
+          </div>
+
+          <!-- Base64 Encoder/Decoder -->
+          <div class="tool-card">
+            <h3>Base64 Converter</h3>
+            <div class="tabs">
+              <button class="tab-btn active" data-tab="textToBase64">Text to Base64</button>
+              <button class="tab-btn" data-tab="base64ToText">Base64 to Text</button>
+              <button class="tab-btn" data-tab="fileToBase64">File to Base64</button>
+              <button class="tab-btn" data-tab="base64ToFile">Base64 to File</button>
+            </div>
+            
+            <div class="tab-content active" id="textToBase64">
+              <textarea id="textInput" class="base64-input" placeholder="Enter text to encode to Base64..."></textarea>
+              <div class="converter-actions">
+                <button id="encodeBtn" class="btn">Encode</button>
+                <button id="copyTextResult" class="btn btn-outline">Copy</button>
+                <button id="clearText" class="btn btn-outline">Clear</button>
+              </div>
+              <textarea id="base64Output" class="base64-output" placeholder="Base64 result will appear here..." readonly></textarea>
+            </div>
+            
+            <div class="tab-content" id="base64ToText">
+              <textarea id="base64Input" class="base64-input" placeholder="Enter Base64 to decode to text..."></textarea>
+              <div class="converter-actions">
+                <button id="decodeBtn" class="btn">Decode</button>
+                <button id="copyDecodedText" class="btn btn-outline">Copy</button>
+                <button id="clearBase64" class="btn btn-outline">Clear</button>
+              </div>
+              <textarea id="decodedText" class="base64-output" placeholder="Decoded text will appear here..." readonly></textarea>
+            </div>
+            
+            <div class="tab-content" id="fileToBase64">
+              <div class="file-upload-area base64-upload" id="base64FileDropZone">
+                <input type="file" id="base64FileInput" class="file-input">
+                <div class="upload-content">
+                  <img src="icons/upload.svg" alt="Upload" class="upload-icon">
+                  <p>Drag & drop a file here or click to browse</p>
+                  <p class="file-types">File will be converted to Base64</p>
+                </div>
+              </div>
+              <div class="file-info" id="base64FileInfo" style="display: none;">
+                <span id="base64FileName"></span>
+                <span id="base64FileSize"></span>
+              </div>
+              <div class="converter-actions">
+                <button id="copyFileBase64" class="btn" disabled>Copy Base64</button>
+                <button id="downloadBase64" class="btn btn-outline" disabled>Download .txt</button>
+              </div>
+              <textarea id="fileBase64Output" class="base64-output" placeholder="File content as Base64 will appear here..." readonly></textarea>
+            </div>
+            
+            <div class="tab-content" id="base64ToFile">
+              <textarea id="base64FileInput" class="base64-input" placeholder="Paste Base64 string here..."></textarea>
+              <div class="form-group">
+                <label for="outputFilename">Output filename (with extension):</label>
+                <input type="text" id="outputFilename" class="form-control" placeholder="example.txt">
+              </div>
+              <div class="converter-actions">
+                <button id="decodeFileBtn" class="btn">Decode to File</button>
+                <button id="previewFileBtn" class="btn btn-outline">Preview</button>
+              </div>
+              <div id="filePreview" class="preview-container"></div>
+            </div>
+          </div>
+
+          <!-- Image Optimizer -->
+          <div class="tool-card">
+            <h3>Image Optimizer</h3>
+            <div class="file-upload-area" id="imageOptimizerDropZone">
+              <input type="file" id="imageOptimizerInput" class="file-input" accept="image/*">
+              <div class="upload-content">
+                <img src="icons/image.svg" alt="Upload" class="upload-icon">
+                <p>Drag & drop an image or click to browse</p>
+                <p class="file-types">JPG, PNG, GIF, WEBP</p>
+              </div>
+            </div>
+            
+            <div id="imageOptimizerControls" style="display: none;">
+              <div class="slider-container">
+                <label for="imageQuality">Quality: <span id="qualityValue">80</span>%</label>
+                <input type="range" id="imageQuality" min="1" max="100" value="80" class="slider">
+              </div>
+              
+              <div class="form-group">
+                <label for="imageFormat">Output Format:</label>
+                <select id="imageFormat" class="form-control">
+                  <option value="jpeg">JPEG</option>
+                  <option value="png">PNG</option>
+                  <option value="webp">WebP</option>
+                </select>
+              </div>
+              
+              <div class="image-preview-container">
+                <div class="image-original">
+                  <h4>Original</h4>
+                  <div id="originalImageContainer" class="image-container"></div>
+                  <div id="originalSize" class="file-size"></div>
+                </div>
+                <div class="image-optimized">
+                  <h4>Optimized <span id="optimizedSize" class="file-size"></span></h4>
+                  <div id="optimizedImageContainer" class="image-container"></div>
+                  <div class="savings">
+                    <span id="savingsPercentage">0%</span> smaller
+                  </div>
+                </div>
+              </div>
+              
+              <div class="converter-actions">
+                <button id="downloadOptimized" class="btn">Download Optimized</button>
+                <button id="copyOptimized" class="btn btn-outline">Copy to Clipboard</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Main Script -->
     <script src="script.js"></script>
+    <!-- Dev Tools Script -->
+    <script src="dev-tools.js"></script>
   </body>
 </html>
